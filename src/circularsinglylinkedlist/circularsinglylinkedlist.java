@@ -4,7 +4,7 @@ import java.util.NoSuchElementException;
 
 public class circularsinglylinkedlist {
     private listnode last;
-
+    private int length;
     private class listnode {
         private int data;
         private listnode next;
@@ -19,13 +19,13 @@ public class circularsinglylinkedlist {
     }
 
     //to find the length of the list
-    int length = 0;
-
     public void length() {
+        length = 0;
         if (last == null) {
             System.out.println("the list is empty");
         } else {
             listnode len = last.next;
+            //listnode t = len;
             System.out.print("the length of the circular singly linked list is : ");
             while (len != last) {
                 length++;
@@ -73,17 +73,14 @@ public class circularsinglylinkedlist {
     }
 
     //to insert at the beginning of the circular linked list
-    public void insertbeg(int data)
-    {
+    public void insertbeg(int data) {
         listnode newnode = new listnode(data);
-        if(last == null)
-        {
+        if (last == null) {
             last = newnode;
-        }
-        else {
+        } else {
             newnode.next = last.next;
         }
-        System.out.println("the inserted element at beginning of the circular linked list is : "+newnode.data);
+        System.out.println("the inserted element at beginning of the circular linked list is : " + newnode.data);
         last.next = newnode;
     }
 
@@ -131,29 +128,48 @@ public class circularsinglylinkedlist {
         } else {
             last.next = temp.next;
         }
-        System.out.println("the deleted element at end of circular linked list is : " + temp.data);
+        System.out.println("the deleted element at beginning of circular linked list is : " + temp.data);
         temp.next = null;
     }
 
     //to delete element at the end of the circular linked list
     public void deleteatend() {
-        listnode temp = last.next;
         if (isempty()) {
             throw new NoSuchElementException();
-        } else if (last.next == last) {
+        }
+        listnode temp = last.next;
+        if (temp.next == temp) {
             deleteatbeg();
         } else {
-            if (temp.next != last) {
+            while (temp.next != last) {
                 temp = temp.next;
             }
             System.out.println("the deleted element at end of circular linked list is : " + temp.next.data);
-            temp.next = last.next;
+            temp.next = temp.next.next;
             last = temp;
         }
     }
 
-
-
+    //to delete at the given position in the circular linked list
+    public void deleteatposition(int pos) {
+        listnode temp = last.next;
+        if (isempty()) {
+            throw new NoSuchElementException();
+        } else if (pos == 0 || pos > length) {
+            System.out.println(pos + " is invalid position");
+        } else if (pos == 1) {
+            deleteatbeg();
+        } else if (pos == length) {
+            deleteatend();
+        } else {
+            for (int i = 1; i < pos - 1; i++) {
+                temp = temp.next;
+            }
+            System.out.println("the deleted element at position " + pos + " in the circular linked list is : " + temp.next.data);
+            temp.next = temp.next.next;
+            temp = last;
+        }
+    }
 
 
     public static void main(String[] args) {
@@ -168,6 +184,7 @@ public class circularsinglylinkedlist {
         c.insertbeg(10);
         c.insertbeg(20);
         c.print();
+        c.length();
 
         //to insert at end
         c.insertatend(30);
@@ -178,16 +195,36 @@ public class circularsinglylinkedlist {
         //to insert at given position
         c.insertatpos(3,100);
         c.print();
+        c.length();
 
         //to delete at the beginning of the list
         c.deleteatbeg();
         c.deleteatbeg();
         c.print();
+        c.length();
 
         //to delete at the end of the list
         c.deleteatend();
         c.deleteatend();
         c.print();
+        c.length();
+
+        //delete at the given position
+        c.insertatend(10);
+        c.insertatend(20);
+        c.insertatend(30);
+        c.insertatend(40);
+        c.length();
+        c.print();
+        c.deleteatposition(1);
+        c.print();
+        c.length();
+        c.deleteatposition(3);
+        c.print();
+        c.length();
+
+
+
 
 
 

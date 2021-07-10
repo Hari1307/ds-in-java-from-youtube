@@ -583,7 +583,6 @@ public class singlylinkedlist {
         s.removeloopinlist();
         s.print();
 
-
     }
 
 }
